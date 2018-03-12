@@ -35,7 +35,23 @@ public class Dichotomy {
     }
 
     public static void main(String[] args) {
-        int[] list = {1, 2, 3, 4, 6, 7, 8};
+        int[] list = {-2,11,-4,13,-5,-2};
         System.out.println(dichotomy(list, 8));
     }
+
+
+//    Position BinarySearch(List L,ElementType X){
+//        int start = 1,end = sizeof(L);
+//        while(start<=end){
+//            int mid = (start+end)/2;
+//            if(List[mid] < X){
+//                end = mid-1;
+//            }else if(List[mid] > X){
+//                start = mid+1;
+//            }else if(List[mid] == X){
+//                return mid;
+//            }
+//        }
+//        return NotFound;
+//    }
 }
