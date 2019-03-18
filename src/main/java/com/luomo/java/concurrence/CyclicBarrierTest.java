@@ -16,7 +16,6 @@ public class CyclicBarrierTest {
         for (int i = 0; i < 10; i++) {
             final int number = i + 1;
             Runnable runnable = new Runnable() {
-                @Override
                 public void run() {
                     try {
                         Thread.sleep(1000);

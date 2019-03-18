@@ -15,7 +15,6 @@ public class ConditionTest {
         final Condition condition1 = lock.newCondition();
         final Condition condition2 = lock.newCondition();
         Thread thread1 = new Thread(new Runnable() {
-            @Override
             public void run() {
                 lock.lock();
                 try {
@@ -32,7 +31,6 @@ public class ConditionTest {
             }
         });
         Thread thread2 = new Thread(new Runnable() {
-            @Override
             public void run() {
                 lock.lock();
                 try {
