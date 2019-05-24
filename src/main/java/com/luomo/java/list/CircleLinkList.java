@@ -13,64 +13,45 @@ public class CircleLinkList<T> implements List<T> {
      */
     public Node head;
 
-    /**
-     * 当前节点对象
-     */
-    private Node current;
-
-    /**
-     * 线性表的长度
-     */
-    public int size;
-
     @Override
     public int size() {
+        Node temp = head;
+        int size = 0;
+        while (temp.next != head) {
+            size++;
+            temp = temp.next;
+        }
         return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
-    }
-
-    /**
-     * 定位函数
-     * <p>
-     * 实现当前操作对象的前一个节点，也就是让当前节点对象定位到要操作的节点的前一个节点
-     *
-     * @param index
-     * @throws Exception
-     */
-    public void index(int index) throws Exception {
-
-        if (index < 0 || index > size) {
-            throw new Exception("参数错误！");
-        }
-        /**
-         * 头结点
-         *
-         */
-        if (index == 0) {
-            return;
-        }
-        current = head.next;
-        int j = 0;
-        while (current != head && j < index) {
-            current = current.next;
-            j++;
-        }
-
+        return size() == 0;
     }
 
     @Override
     public void insert(int index, T data) throws Exception {
-
-        if (index < 0 || index > size) {
+        if (index < 1) {
             throw new Exception("参数错误！");
         }
-        index(index);
-        current.next = new Node(data, current.next);
-        size++;
+        Node node = new Node();
+        node.data = data;
+        if (head.next == head) {
+            //第一次插入元素
+            head.next = node;
+            node.next = head;
+        } else {
+            Node temp = head;
+            int count = 0;
+            while (temp.next != head) {
+                count++;
+                temp = temp.next;
+                if (count == index - 1) {
+                    node.next = temp.next;
+                    temp.next = node;
+                }
+            }
+        }
     }
 
     @Override
@@ -80,22 +61,39 @@ public class CircleLinkList<T> implements List<T> {
             throw new Exception("链表为空，无法删除！");
         }
 
-        if (index < 0 || index > size) {
+        if (index < 1 || index > size()) {
             throw new Exception("参数错误！");
         }
-        //定位要操作节点的前一个节点对象
-        index(index - 1);
-        current.next = current.next.next;
-        size--;
+        Node temp = head;
+        int count = 0;
+        while (temp.next != head) {
+            count++;
+            if (count == index) {
+                //删除节点
+                temp.next = temp.next.next;
+            } else {
+                //指针后移
+                temp = temp.next;
+            }
+        }
     }
 
     @Override
     public T get(int index) throws Exception {
-        if (index < -1 || index > size - 1) {
+        if (index < 1 || index > size()) {
             throw new Exception("参数错误！");
         }
-        index(index);
-        return (T) current.data;
+        int count = 0;
+        T data = null;
+        Node temp = head;
+        while (temp.next != head) {
+            count++;
+            if (count == index) {
+                data = (T) temp.next.data;
+            }
+            temp = temp.next;
+        }
+        return data;
     }
 
     public class Node<T> {
@@ -106,12 +104,53 @@ public class CircleLinkList<T> implements List<T> {
             this.data = data;
             this.next = next;
         }
+
+        public Node() {
+        }
     }
 
     public CircleLinkList() {
-        this.head = current = new Node(null, null);
-        this.size = 0;
-        this.head.next = this.head;
+        head = new Node();
+        head.next = head;
+    }
+
+    public void print() {
+        if (!isEmpty()) {
+            Node temp = head;
+            while (temp.next != head) {
+                temp = temp.next;
+                System.out.println(temp.data);
+            }
+        }
+
+    }
+
+    /**
+     * 创建环形链表（不包括头结点）
+     *
+     * @param n
+     * @return 第一个节点
+     */
+    public Node create(int n, Integer data) {
+        Node temp = head;
+        int i = 1;
+        Node p = null;
+        if (n > 0) {
+            while (i <= n) {
+                p = new Node();
+                if (data == null) {
+                    p.data = i++;
+                } else {
+                    i++;
+                    p.data = data;
+                }
+                temp.next = p;
+                temp = p;
+            }
+            //将最后一个节点指向第一个节点，释放头结点
+            p.next = head.next;
+        }
+        return p.next;
     }
 
 }

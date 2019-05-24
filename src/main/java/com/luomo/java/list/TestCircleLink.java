@@ -1,96 +1,92 @@
 package com.luomo.java.list;
 
+import java.util.ArrayList;
+
+
 /**
  * @author LiuMei
  * @date 2019/5/23 0023
  */
 public class TestCircleLink {
 
-    public static void main(String[] args) throws Exception {
-        Game game = new Game(31, 3);
-//        game.play();
-        Game jos = new Game(10, 3);
-        jos.josephus();
-    }
-
-}
-
-class Game {
-
-    CircleLinkList list = new CircleLinkList();
-    /**
-     * 总人数
-     */
-    int num;
-    /**
-     * 数到几退出
-     */
-    int key;
-
-    public Game(int num, int key) {
-        this.num = num;
-        this.key = key;
-    }
-
-    public void josephus() throws Exception {
-        CircleLinkList.Node p = list.head.next;
-        for (int i = 0; i < num; i++) {
-            if (p == list.head) {
-                p.data = i+1;
-                p.next = p;
-                list.size++;
+    public static void josephus(int totalNum, int cycleNum, int index) {
+        // 把所有人列入集合
+        ArrayList<Integer> start = new ArrayList<>();
+        for (int i = 1; i <= totalNum; i++) {
+            start.add(i);
+        }
+        //把k设为起始坐标
+        int k = index - 1 < 0 ? 0 : index - 1;
+        while (start.size() > 0) {
+            //赋值
+            k = (k + cycleNum) % start.size();
+            //第m个人的索引位置等于
+            k = k % (start.size()) - 1;
+            // 判断是否到队尾
+            //输出该值后删除
+            if (k < 0) {
+                System.out.println(start.get(start.size() - 1));
+                start.remove(start.size() - 1);
+                k = 0;
             } else {
-                list.insert(i, i + 1);
+                System.out.println(start.get(k));
+                start.remove(k);
             }
         }
-        key %= num;
+    }
+
+    public static void josephus(int total, int key) {
+        CircleLinkList list = new CircleLinkList();
+        CircleLinkList.Node p = list.create(total,null);
         CircleLinkList.Node temp;
+        key %= total;
         while (p != p.next) {
             for (int i = 1; i < key - 1; i++) {
                 p = p.next;
             }
-            System.out.println(p.next.data + "->");
+            System.out.println(p.next.data);
+            //删除第key个节点
             temp = p.next;
             p.next = temp.next;
+
             p = p.next;
         }
-        System.out.println("over");
         System.out.println(p.data);
     }
 
-    public void play() throws Exception {
-        for (int i = 0; i < num; i++) {
-            list.insert(i, i + 1);
-        }
-        System.out.println("=======游戏开始之前========");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i) + " ");
-        }
-        System.out.println("=======游戏开始========");
-        //开始等于总人数
-        int iCount = num;
-        //累加器，计算是否能被key整除
-        int j = 0;
-
-        CircleLinkList.Node node = list.head;
-        while (iCount != 1) {
-            if (node.data != null && Integer.parseInt(node.data.toString()) != -1) {
-                j++;
-                if (j % key == 0) {
-                    node.data = -1;
-                    iCount--;
-                    System.out.println();
-                    for (int i = 0; i < list.size(); i++) {
-                        System.out.println(list.get(i));
-                    }
+    public static void magician() {
+        CircleLinkList list = new CircleLinkList();
+        CircleLinkList.Node head = list.create(13,0);
+        CircleLinkList.Node p = head;
+        p.data = 1;
+        int count = 2;
+        while (true) {
+            for (int j = 0; j < count; j++) {
+                p = p.next;
+                if((int)p.data != 0){
+                    //如果位置有牌的话，则下一个位置
+                    j--;
                 }
             }
-            node = node.next;
+            if((int)p.data == 0){
+                p.data = count;
+                count++;
+                if(count == 14){
+                    break;
+                }
+            }
         }
-        System.out.println("=======游戏结束========");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
+        for(int i = 0;i<13;i++){
+            System.out.println(head.data);
+            head = head.next;
         }
     }
 
+    public static void main(String[] args) {
+//        josephus(41, 3, 1);
+//        josephus(41, 3);
+        magician();
+    }
+
 }
+
