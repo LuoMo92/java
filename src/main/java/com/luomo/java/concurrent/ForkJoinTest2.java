@@ -1,4 +1,4 @@
-package com.luomo.java;
+package com.luomo.java.concurrent;
 
 import java.util.HashMap;
 import java.util.Map;

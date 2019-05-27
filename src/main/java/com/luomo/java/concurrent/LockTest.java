@@ -1,4 +1,4 @@
-package com.luomo.java;
+package com.luomo.java.concurrent;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

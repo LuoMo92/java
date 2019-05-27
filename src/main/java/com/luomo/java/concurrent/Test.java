@@ -1,4 +1,4 @@
-package com.luomo.java;
+package com.luomo.java.concurrent;
 
 /**
  * @author LiuMei

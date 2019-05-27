@@ -1,4 +1,4 @@
-package com.luomo.java;
+package com.luomo.java.concurrent;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
