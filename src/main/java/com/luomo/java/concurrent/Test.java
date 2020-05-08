@@ -35,9 +35,7 @@ public class Test {
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i < 10000; i++) {
             long calc = calc();
-            if (calc < 10000) {
-                System.out.println(calc);
-            }
+            System.out.println(calc);
             count = 0L;
         }
     }
