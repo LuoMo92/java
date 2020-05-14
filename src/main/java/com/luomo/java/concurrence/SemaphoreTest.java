@@ -29,6 +29,9 @@ public class SemaphoreTest {
                         semaphore.acquire();
                         number.incrementAndGet();
                     } catch (InterruptedException e) {}
+                    finally {
+                       // semaphore.release();
+                    }
                 }
             };
             Thread thread = new Thread(runnable);

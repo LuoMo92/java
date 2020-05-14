@@ -1,5 +1,7 @@
 package com.luomo.java.concurrent;
 
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -34,6 +36,18 @@ public class Cache<K, V> {
             return map.put(key, v);
         } finally {
             w.unlock();
+        }
+    }
+
+    @Test
+    public void test() {
+        try {
+            r.lock();
+            w.lock();
+            System.out.println("===");
+        } catch (Exception e) {
+        } finally {
+            r.unlock();
         }
     }
 

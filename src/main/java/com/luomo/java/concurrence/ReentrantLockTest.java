@@ -2,6 +2,7 @@ package com.luomo.java.concurrence;
 
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author LiuMei
@@ -41,6 +42,27 @@ public class ReentrantLockTest {
         System.arraycopy(objects1, 0, objects, 0, objects1.length);
         System.arraycopy(objects2, 0, objects, objects1.length, objects2.length);
         return objects;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        final ReentrantReadWriteLock lock = new ReentrantReadWriteLock ();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                lock.writeLock().lock();
+                System.out.println("Thread real execute");
+                lock.writeLock().unlock();
+            }
+        });
+
+        lock.writeLock().lock();
+        lock.writeLock().lock();
+        t.start();
+        Thread.sleep(200);
+
+        System.out.println("release one once");
+        lock.writeLock().unlock();
+        lock.writeLock().unlock();
     }
 
 
